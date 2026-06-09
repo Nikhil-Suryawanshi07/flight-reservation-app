@@ -19,7 +19,7 @@ pipeline{
             steps{
                 sh '''
                 cd frontend
-                aws s3 sync dist/ s3://cblkdfsfdsc-frnewcjdnd-project-bux/ 
+                aws s3 sync dist/ s3://cblkdfsfdnewcjdnd-project-bux/ 
                 '''  
             }
         }

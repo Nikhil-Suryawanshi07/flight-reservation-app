@@ -43,6 +43,7 @@ pipeline{
             steps{
                 sh '''
                     cd FlightReservationApplication
+                    sed -i "s|image: mayurwagh/flight-reservation-app:latest|image: $REPONAME/$IMAGE_NAME:$BUILD_NUMBER|g" k8s/deployment.yaml
                     kubectl apply -f k8s/deployment.yaml
                     kubectl apply -f k8s/service.yaml
                 '''

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: flight-reservation-app
-        image: $REPONAME/$IMAGE_NAME:$BUILD_NUMBER
+        image: mayurwagh/flight-reservation-app:latest 
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

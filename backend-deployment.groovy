@@ -1,5 +1,9 @@
 pipeline{
     agent any 
+    environment {
+        REPONAME 'mayurmwagh'
+        IMAGE_NAME 'flight-reservation-CDEC-B50' 
+    }
 
     stages{
         stage('checkout'){
@@ -24,6 +28,23 @@ pipeline{
                     mvn sonar:sonar -Dsonar.projectKey=flight-reservation
                 '''
                 }
+            }
+        }
+        stage('Dockerbuild'){
+            steps{
+                sh '''
+                    cd FlightReservationApplication
+                    docker build -t $REPONAME/$IMAGE_NAME:$BUILD_NUMBER .
+                    docker push $REPONAME/$IMAGE_NAME:$BUILD_NUMBER
+                '''
+            }
+        }
+        stage('Deploy to EKS'){
+            steps{
+                sh '''
+                    cd FlightReservationApplication
+                    kubectl apply -f k8s/*
+                '''
             }
         }
     }

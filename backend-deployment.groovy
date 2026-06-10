@@ -27,8 +27,15 @@ pipeline {
             steps {
                 withSonarQubeEnv(credentialsId: 'sonar-cred', installationName: 'sonar') {
                     sh '''
-                        cd FlightReservationApplication
-                        mvn sonar:sonar -Dsonar.projectKey=flight-reservation -DskipTests
+                        export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+                    export PATH=$JAVA_HOME/bin:$PATH
+
+                    java -version
+                    javac -version
+                    mvn -version
+
+                    cd FlightReservationApplication
+                    mvn clean package -DskipTests
                     '''
                 }
             }

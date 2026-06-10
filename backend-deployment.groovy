@@ -23,16 +23,16 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonar') {
-                    sh '''
-                        cd FlightReservationApplication
-                        mvn sonar:sonar
-                    '''
-                }
-            }
-        }
+        // stage('SonarQube Analysis') {
+        //     steps {
+        //         withSonarQubeEnv('sonar') {
+        //             sh '''
+        //                 cd FlightReservationApplication
+        //                 mvn sonar:sonar
+        //             '''
+        //         }
+        //     }
+        // }
 
         stage('Docker Build & Push') {
             steps {

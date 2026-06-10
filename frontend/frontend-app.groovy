@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('Code-Pull'){
             steps{
-                git branch: 'main', url: 'https://github.com/mayurmwagh/flight-reservation-app.git'    
+                git branch: 'main', url: 'https://github.com/Nikhil-Suryawanshi07/flight-reservation-app.git'    
             }
         }
         stage('Code-Build'){
@@ -15,13 +15,15 @@ pipeline{
                 '''
             }
         }
-        stage('Deploy'){
-            steps{
+       stage('Deploy') {
+         steps {
+            withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-creds']]) {
                 sh '''
-                cd frontend
-                aws s3 sync dist/ s3://cblkdfsfdnewcjdnd-project-bux/ 
-                '''  
+                    cd frontend
+                    aws s3 sync dist/ s3://cbz-frontend-project-nikhil/ 
+                '''
             }
         }
+    }
     }
 }

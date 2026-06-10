@@ -51,17 +51,15 @@ pipeline {
             }
         }
 
-        stage('Deploy to EKS') {
-            steps {
-                sh '''
-                    cd FlightReservationApplication
+       stage('Deploy to EKS') {
+    steps {
+        sh '''
+            kubectl set image deployment/flight-reservation-app \
+            flight-reservation-app=$REPONAME/$IMAGE_NAME:$BUILD_NUMBER
 
-                    sed -i "s|image: Nikhil-Suryawanshi07/flight-reservation-app:latest|image: $REPONAME/$IMAGE_NAME:$BUILD_NUMBER|g" k8s/deployment.yaml
-
-                    kubectl apply -f k8s/deployment.yaml
-                    kubectl apply -f k8s/service.yaml
-                '''
-            }
-        }
+            kubectl rollout status deployment/flight-reservation-app
+        '''
+    }
+}
     }
 }
